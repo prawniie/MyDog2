@@ -15,7 +15,7 @@ namespace MyDog
             Console.WriteLine("a) Show all exhibitors");
             Console.WriteLine("b) Add new exhibitor");
             Console.WriteLine("c) Update exhibitor info..");
-            Console.WriteLine("d) Delete exhibitor..");
+            Console.WriteLine("d) Delete exhibitor");
             Console.WriteLine("e) Go back to main menu");
 
             ConsoleKey command = Console.ReadKey(true).Key;
@@ -51,6 +51,7 @@ namespace MyDog
             if (!int.TryParse(input, out int exhibitorId))
             {
                 WriteRed("Please enter the exhibitor's id number");
+                Console.ReadKey();
                 DeleteExhibitor();
             }
 
@@ -81,9 +82,6 @@ namespace MyDog
 
             listOfExhibitors = _dataAccess.GetAllExhibitors();
 
-            Console.Clear();
-
-            Header("Exhibitors");
             foreach (var exhibitor in listOfExhibitors)
             {
                 Console.Write($"{exhibitor.Id}* ".PadRight(5));

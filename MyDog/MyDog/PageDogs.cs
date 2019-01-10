@@ -40,7 +40,34 @@ namespace MyDog
 
         private void DeleteDog()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Delete dog");
+            ShowAllDogsBrief();
+
+            Console.Write("Which dog do you want to delete (please enter the id number)? ");
+
+            string input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int dogId))
+            {
+                WriteRed("Please enter the dog's id number");
+                Console.ReadKey();
+                DeleteDog();
+            }
+
+            bool exhibitorIdExists = _dataAccess.CheckIfDogIdExists(dogId);
+
+            if (exhibitorIdExists == false)
+            {
+                WriteRed($"\nAn exhibitor with id number {dogId} doesn't exist.");
+            }
+            else
+            {
+                _dataAccess.RemoveDogFromExhibitorDog(dogId);
+                _dataAccess.RemoveDog(dogId);
+
+                WriteGreen("\nThe dog has been deleted!");
+            }
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
@@ -108,6 +135,20 @@ namespace MyDog
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
             PageMainMenu();
+        }
+
+        private void ShowAllDogsBrief()
+        {
+            List<Dog> listOfDogs = new List<Dog>();
+
+            listOfDogs = _dataAccess.GetAllDogs();
+
+            foreach (var dog in listOfDogs)
+            {
+                Console.Write($"*{dog.Id}".PadRight(10));
+                Console.Write(dog.Name.PadRight(20));
+                Console.WriteLine(dog.Breed);
+            }
         }
     }
 }

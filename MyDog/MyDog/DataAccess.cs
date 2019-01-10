@@ -37,7 +37,7 @@ namespace MyDog
 
         internal List<Dog> GetAllDogs()
         {
-            var sql = "SELECT Dog.Name, Breed.Name FROM Dog JOIN Breed ON Dog.BreedId = Breed.Id";
+            var sql = "SELECT Dog.Name, Dog.Id, Breed.Name FROM Dog JOIN Breed ON Dog.BreedId = Breed.Id";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -52,12 +52,49 @@ namespace MyDog
                 {
                     var dog = new Dog();
                     dog.Name = reader.GetSqlString(0).Value;
-                    dog.Breed = reader.GetSqlString(1).Value;
+                    dog.Id = reader.GetSqlInt32(1).Value;
+                    dog.Breed = reader.GetSqlString(2).Value;
                     listOfDogs.Add(dog);
                 }
 
                 return listOfDogs;
             }
+        }
+
+        internal void RemoveDog(int dogId)
+        {
+            var sql = "DELETE FROM Dog WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", dogId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void RemoveDogFromExhibitorDog(int dogId)
+        {
+            var sql = "DELETE FROM ExhibitorDog WHERE DogId =@Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", dogId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal bool CheckIfDogIdExists(int dogId)
+        {
+            List<Dog> listOfDogs = GetAllDogs();
+
+            if (listOfDogs.Select(d => d.Id).Contains(dogId))
+                return true;
+            else
+                return false;
         }
 
         internal void RemoveExhibitorFromRingExhibitor(int exhibitorId)
