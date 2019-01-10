@@ -34,5 +34,30 @@ namespace MyDog
                 return listOfBreeds;
             }
         }
+
+        internal List<Dog> GetAllDogs()
+        {
+            var sql = "SELECT Dog.Name, Breed.Name FROM Dog JOIN Breed ON Dog.BreedId = Breed.Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var listOfDogs = new List<Dog>();
+
+                while(reader.Read())
+                {
+                    var dog = new Dog();
+                    dog.Name = reader.GetSqlString(0).Value;
+                    dog.Breed = reader.GetSqlString(1).Value;
+                    listOfDogs.Add(dog);
+                }
+
+                return listOfDogs;
+            }
+        }
     }
 }

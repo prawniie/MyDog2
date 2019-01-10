@@ -39,21 +39,6 @@ namespace MyDog
                 PageBreeds();
         }
 
-        
-
-        private void PageDogs()
-        {
-            Console.Clear();
-
-            Header("Dogs");
-
-            Console.WriteLine("See all competing dogs..");
-            Console.WriteLine("Add new dog..");
-            Console.WriteLine("Update dog info..");
-            Console.WriteLine("Delete dog..");
-
-            Console.WriteLine();
-        }
 
         private void PageRings()
         {
