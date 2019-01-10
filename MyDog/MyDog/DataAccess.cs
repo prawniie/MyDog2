@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
-
+using System.Linq;
 
 namespace MyDog
 {
@@ -58,6 +58,31 @@ namespace MyDog
 
                 return listOfDogs;
             }
+        }
+
+        internal void CreateBreed(Breed breed)
+        {
+            var sql = "INSERT INTO Breed VALUES(@Name)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Name", breed.Name));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal bool CheckIfBreedExists(Breed breed)
+        {
+            List<Breed> listOfBreeds = GetAllBreeds();
+
+            if (listOfBreeds.Select(b => b.Name).Contains(breed.Name))
+                return true;
+            else
+                return false;
         }
 
         internal List<Ring> GetAllRings()

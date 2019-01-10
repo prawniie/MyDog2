@@ -39,17 +39,46 @@ namespace MyDog
 
         private void DeleteBreed()
         {
-            Console.WriteLine("Feature will be implemented in the following sprint..");
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
         }
 
         private void UpdateBreed()
         {
-            Console.WriteLine("Feature will be implemented in the following sprint..");
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
         }
 
         private void AddBreed()
         {
-            Console.WriteLine("Feature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Add new breed");
+
+            Breed breed = new Breed();
+            Console.Write("What is the name of the breed? ");
+            breed.Name = Console.ReadLine();
+
+            bool breedExistsInDatabase = _dataAccess.CheckIfBreedExists(breed);
+
+            if(breedExistsInDatabase == false)
+            {
+                _dataAccess.CreateBreed(breed);
+                WriteGreen($"The breed {breed.Name} has been added!");
+            }
+            else
+            {
+               WriteRed($"The breed {breed.Name} already exists!");
+            }
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
         }
 
         private void ShowAllBreeds()

@@ -40,17 +40,31 @@ namespace MyDog
 
         private void DeleteDog()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
         }
 
         private void UpdateDog()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void AddDog()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void ShowAllDogs()

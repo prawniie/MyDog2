@@ -54,5 +54,12 @@ namespace MyDog
             Console.WriteLine(text);
             Console.ResetColor();
         }
+
+        private void WriteRed(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
     }
 }

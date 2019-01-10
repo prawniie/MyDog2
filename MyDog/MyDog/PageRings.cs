@@ -13,7 +13,7 @@ namespace MyDog
 
             Header("Rings");
 
-            Console.WriteLine("a) See all rings..");
+            Console.WriteLine("a) See all rings");
             Console.WriteLine("b) Add new ring..");
             Console.WriteLine("c) Update ring info..");
             Console.WriteLine("d) Delete ring..");
@@ -43,17 +43,32 @@ namespace MyDog
 
         private void DeleteRing()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void UpdateRing()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void AddRing()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void ShowAllRings()

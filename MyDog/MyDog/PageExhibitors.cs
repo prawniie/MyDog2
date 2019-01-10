@@ -12,7 +12,7 @@ namespace MyDog
 
             Header("Exhibitors");
 
-            Console.WriteLine("a) See all exhibitors..");
+            Console.WriteLine("a) See all exhibitors");
             Console.WriteLine("b) Add new exhibitor..");
             Console.WriteLine("c) Update exhibitor info..");
             Console.WriteLine("d) Delete exhibitor..");
@@ -40,17 +40,31 @@ namespace MyDog
 
         private void DeleteExhibitor()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void UpdateExhibitor()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
+
         }
 
         private void AddExhibitor()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();
+            PageMainMenu();
         }
 
         private void ShowAllExhibitors()
