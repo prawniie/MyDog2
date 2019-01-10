@@ -5,67 +5,69 @@ using System.Text;
 namespace MyDog
 {
     partial class App
+
     {
-        private void PageDogs()
+        private void PageRings()
         {
             Console.Clear();
 
-            Header("Dogs");
+            Header("Rings");
 
-            Console.WriteLine("a) See all dogs");
-            Console.WriteLine("b) Add new dog..");
-            Console.WriteLine("c) Update dog info..");
-            Console.WriteLine("d) Delete dog..");
+            Console.WriteLine("a) See all rings..");
+            Console.WriteLine("b) Add new ring..");
+            Console.WriteLine("c) Update ring info..");
+            Console.WriteLine("d) Delete ring..");
             Console.WriteLine("e) Go back to main menu");
 
             ConsoleKey command = Console.ReadKey(true).Key;
 
             if (command == ConsoleKey.A)
-                ShowAllDogs();
+                ShowAllRings();
 
             if (command == ConsoleKey.B)
-                AddDog();
+                AddRing();
 
             if (command == ConsoleKey.C)
-                UpdateDog();
+                UpdateRing();
 
             if (command == ConsoleKey.D)
-                DeleteDog();
+                DeleteRing();
 
             if (command == ConsoleKey.E)
                 PageMainMenu();
 
             Console.WriteLine();
+
+            Console.WriteLine();
         }
 
-        private void DeleteDog()
+        private void DeleteRing()
         {
             throw new NotImplementedException();
         }
 
-        private void UpdateDog()
+        private void UpdateRing()
         {
             throw new NotImplementedException();
         }
 
-        private void AddDog()
+        private void AddRing()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowAllDogs()
+        private void ShowAllRings()
         {
-            List<Dog> listOfDogs = new List<Dog>();
+            List<Ring> listOfRings = new List<Ring>();
 
-            listOfDogs = _dataAccess.GetAllDogs();
+            listOfRings = _dataAccess.GetAllRings();
 
             Console.Clear();
 
-            Header("Dogs");
-            foreach (var dog in listOfDogs)
+            Header("Rings");
+            foreach (var ring in listOfRings)
             {
-                Console.Write($"* {dog.Name}".PadRight(20));
-                Console.WriteLine(dog.Breed);
+                Console.WriteLine($"* Ring number {ring.Number}");
             }
 
             Console.WriteLine("\nPress any key to go back to main menu");

@@ -40,39 +40,18 @@ namespace MyDog
         }
 
 
-        private void PageRings()
-        {
-            Console.Clear();
-
-            Header("Rings");
-
-            Console.WriteLine("See all rings..");
-            Console.WriteLine("Add new ring..");
-            Console.WriteLine("Update ring info..");
-            Console.WriteLine("Delete ring..");
-
-            Console.WriteLine();
-        }
-
-        private void PageExhibitors()
-        {
-            Console.Clear();
-
-            Header("Exhibitors");
-
-            Console.WriteLine("See all exhibitors..");
-            Console.WriteLine("Add new exhibitor..");
-            Console.WriteLine("Update exhibitor info..");
-            Console.WriteLine("Delete exhibitor..");
-
-            Console.WriteLine();
-        }
-
         private void Header(string text)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(text.ToUpper());
             Console.WriteLine();
+            Console.ResetColor();
+        }
+
+        private void WriteGreen(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(text);
             Console.ResetColor();
         }
     }

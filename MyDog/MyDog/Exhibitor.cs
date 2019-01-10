@@ -12,5 +12,6 @@ namespace MyDog
         public int PhoneNumber { get; set; }
         public string EmailAdress { get; set; }
 
+        public List<Dog> Dogs { get; set; }
     }
 }
