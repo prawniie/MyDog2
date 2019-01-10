@@ -13,7 +13,7 @@ namespace MyDog
             Header("Exhibitors");
 
             Console.WriteLine("a) See all exhibitors");
-            Console.WriteLine("b) Add new exhibitor..");
+            Console.WriteLine("b) Add new exhibitor");
             Console.WriteLine("c) Update exhibitor info..");
             Console.WriteLine("d) Delete exhibitor..");
             Console.WriteLine("e) Go back to main menu");

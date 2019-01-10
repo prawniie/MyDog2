@@ -60,6 +60,32 @@ namespace MyDog
             }
         }
 
+        internal bool CheckIfRingExists(Ring ring)
+        {
+            List<Ring> listOfRings = GetAllRings();
+
+            if (listOfRings.Select(r => r.Number).Contains(ring.Number))
+                return true;
+            else
+                return false;
+        }
+
+        internal void CreateRing(Ring ring)
+        {
+            var sql = "INSERT INTO Ring VALUES(@Number)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Number", ring.Number));
+
+                command.ExecuteNonQuery();
+            }
+
+        }
+
         internal void CreateBreed(Breed breed)
         {
             var sql = "INSERT INTO Breed VALUES(@Name)";

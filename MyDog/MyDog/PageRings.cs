@@ -14,7 +14,7 @@ namespace MyDog
             Header("Rings");
 
             Console.WriteLine("a) See all rings");
-            Console.WriteLine("b) Add new ring..");
+            Console.WriteLine("b) Add new ring");
             Console.WriteLine("c) Update ring info..");
             Console.WriteLine("d) Delete ring..");
             Console.WriteLine("e) Go back to main menu");
@@ -63,7 +63,24 @@ namespace MyDog
 
         private void AddRing()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Add ring");
+
+            var ring = new Ring();
+            Console.Write("Enter the number of the new ring: ");
+            ring.Number = int.Parse(Console.ReadLine());
+
+            bool ringExists = _dataAccess.CheckIfRingExists(ring);
+
+            if(ringExists == false)
+            {
+                _dataAccess.CreateRing(ring);
+                WriteGreen($"\nThe ring {ring.Number} was created!");
+            }
+            else
+            {
+                WriteRed("\nThe ring already exists!");
+            }
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
