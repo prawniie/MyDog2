@@ -60,6 +60,83 @@ namespace MyDog
             }
         }
 
+        internal void RemoveExhibitorFromRingExhibitor(int exhibitorId)
+        {
+            var sql = "DELETE FROM RingExhibitor WHERE ExhibitorId = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", exhibitorId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void RemoveExhibitorFromExhibitorDog(int exhibitorId)
+        {
+            var sql = "DELETE FROM ExhibitorDog WHERE ExhibitorId = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", exhibitorId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void RemoveExhibitor(int exhibitorId)
+        {
+            var sql = "DELETE FROM Exhibitor WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Id", exhibitorId));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal bool CheckIfExhibitorIdExists(int exhibitorId)
+        {
+            List<Exhibitor> listOfExhibitors = GetAllExhibitors();
+
+            if (listOfExhibitors.Select(e => e.Id).Contains(exhibitorId))
+                return true;
+            else
+                return false;
+        }
+
+        internal bool CheckIfBreedIdExists(int breedId)
+        {
+            List<Breed> listOfBreeds = GetAllBreeds();
+
+            if (listOfBreeds.Select(b => b.Id).Contains(breedId))
+                return true;
+            else
+                return false;
+
+        }
+
+        internal void RemoveBreed(int breedId)
+        {
+            var sql = "DELETE FROM Breed WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Id", breedId));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
         internal bool CheckIfRingExists(Ring ring)
         {
             List<Ring> listOfRings = GetAllRings();

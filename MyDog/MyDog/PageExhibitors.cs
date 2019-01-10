@@ -12,7 +12,7 @@ namespace MyDog
 
             Header("Exhibitors");
 
-            Console.WriteLine("a) See all exhibitors");
+            Console.WriteLine("a) Show all exhibitors");
             Console.WriteLine("b) Add new exhibitor");
             Console.WriteLine("c) Update exhibitor info..");
             Console.WriteLine("d) Delete exhibitor..");
@@ -40,12 +40,58 @@ namespace MyDog
 
         private void DeleteExhibitor()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Header("Delete exhibitor");
+
+            ShowAllExhibitorsBrief();
+
+            Console.Write("Which exhibitor do you want to delete (please enter the id number)? ");
+
+            string input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int exhibitorId))
+            {
+                WriteRed("Please enter the exhibitor's id number");
+                DeleteExhibitor();
+            }
+
+            bool exhibitorIdExists = _dataAccess.CheckIfExhibitorIdExists(exhibitorId);
+
+            if (exhibitorIdExists == false)
+            {
+                WriteRed($"\nAn exhibitor with id number {exhibitorId} doesn't exist.");
+            }
+            else
+            {
+                _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId);
+                _dataAccess.RemoveExhibitorFromExhibitorDog(exhibitorId);
+                _dataAccess.RemoveExhibitor(exhibitorId);
+
+                WriteGreen("\nThe exhibitor has been deleted!");
+            }
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
             PageMainMenu();
 
+        }
+
+        private void ShowAllExhibitorsBrief()
+        {
+            List<Exhibitor> listOfExhibitors = new List<Exhibitor>();
+
+            listOfExhibitors = _dataAccess.GetAllExhibitors();
+
+            Console.Clear();
+
+            Header("Exhibitors");
+            foreach (var exhibitor in listOfExhibitors)
+            {
+                Console.Write($"{exhibitor.Id}* ".PadRight(5));
+                Console.Write(exhibitor.FirstName.PadRight(15));
+                Console.Write(exhibitor.LastName.PadRight(20));
+                Console.Write($"{exhibitor.PhoneNumber}".PadRight(20));
+                Console.WriteLine(exhibitor.EmailAdress);
+            }
         }
 
         private void UpdateExhibitor()

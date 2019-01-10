@@ -11,10 +11,10 @@ namespace MyDog
             Console.Clear();
 
             Header("Breeds");
-            Console.WriteLine("a) See all breeds");
-            Console.WriteLine("b) Add breed..");
+            Console.WriteLine("a) Show all breeds");
+            Console.WriteLine("b) Add breed");
             Console.WriteLine("c) Update breed info..");
-            Console.WriteLine("d) Delete breed..");
+            Console.WriteLine("d) Delete breed");
             Console.WriteLine("e) Go back to main menu");
 
             ConsoleKey command = Console.ReadKey(true).Key;
@@ -39,7 +39,37 @@ namespace MyDog
 
         private void DeleteBreed()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Delete breed");
+
+            List<Breed> listOfBreeds = new List<Breed>();
+            listOfBreeds = _dataAccess.GetAllBreeds();
+
+            foreach (var breed in listOfBreeds)
+            {
+                Console.WriteLine($"{breed.Id} {breed.Name}");
+            }
+
+            Console.Write("Which breed do you want to delete (enter the breed's id number): ");
+            string input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int breedId))
+            {
+                WriteRed("Please enter the breed's id number");
+                DeleteBreed();
+            }
+
+            bool breedIdExists = _dataAccess.CheckIfBreedIdExists(breedId);
+
+            if(breedIdExists == false)
+            {
+                WriteRed($"\nA breed with id number {breedId} doesn't exist.");
+            }
+            else
+            {
+                _dataAccess.RemoveBreed(breedId);
+                WriteGreen("\nThe breed has been deleted!");
+            }
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
