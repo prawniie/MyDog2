@@ -60,7 +60,27 @@ namespace MyDog
 
         private void AddExhibitor()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Add exhibitor");
+
+            var exhibitor = new Exhibitor();
+            Console.Write("Enter first name: ");
+            exhibitor.FirstName = Console.ReadLine();
+
+            Console.Write("Enter last name: ");
+            exhibitor.LastName = Console.ReadLine();
+
+            Console.Write("Enter phone number: ");
+            exhibitor.PhoneNumber = Console.ReadLine();
+
+            Console.Write("Enter email adress: ");
+            exhibitor.EmailAdress = Console.ReadLine();
+
+            _dataAccess.CreateExhibitor(exhibitor);
+
+            //Lägg till att man kan lägga till hundar också, vilket sedan uppdateras i hunddatabasen
+
+            WriteGreen($"\n{exhibitor.FirstName} {exhibitor.LastName} has been added!");
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
@@ -81,7 +101,7 @@ namespace MyDog
                 Console.Write($"{exhibitor.Id}* ".PadRight(5));
                 Console.Write(exhibitor.FirstName.PadRight(15));
                 Console.Write(exhibitor.LastName.PadRight(20));
-                Console.Write($"0{exhibitor.PhoneNumber.ToString()}".PadRight(20));
+                Console.Write($"{exhibitor.PhoneNumber}".PadRight(20));
                 Console.WriteLine(exhibitor.EmailAdress);
             }
 

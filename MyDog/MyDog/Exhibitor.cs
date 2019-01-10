@@ -9,7 +9,7 @@ namespace MyDog
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string EmailAdress { get; set; }
 
         public List<Dog> Dogs { get; set; }

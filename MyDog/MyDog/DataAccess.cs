@@ -75,6 +75,25 @@ namespace MyDog
             }
         }
 
+        internal void CreateExhibitor(Exhibitor exhibitor)
+        {
+            var sql = "INSERT INTO Exhibitor(FirstName, LastName, PhoneNumber, Mailadress) " +
+                        "VALUES (@FirstName, @LastName, @PhoneNumber, @EmailAdress)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("FirstName", exhibitor.FirstName));
+                command.Parameters.Add(new SqlParameter("LastName", exhibitor.LastName));
+                command.Parameters.Add(new SqlParameter("PhoneNumber", exhibitor.PhoneNumber));
+                command.Parameters.Add(new SqlParameter("EmailAdress", exhibitor.EmailAdress));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
         internal void CreateBreed(Dog dog)
         {
             var sql = "INSERT INTO Breed VALUES(@Name)";
@@ -208,7 +227,7 @@ namespace MyDog
                     exhibitor.Id = reader.GetSqlInt32(0).Value;
                     exhibitor.FirstName = reader.GetSqlString(1).Value;
                     exhibitor.LastName = reader.GetSqlString(2).Value;
-                    exhibitor.PhoneNumber = reader.GetSqlInt32(3).Value;
+                    exhibitor.PhoneNumber = reader.GetSqlString(3).Value;
                     exhibitor.EmailAdress = reader.GetSqlString(4).Value;
 
                     listOfExhibitors.Add(exhibitor);
