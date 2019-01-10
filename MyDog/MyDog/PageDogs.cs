@@ -15,7 +15,7 @@ namespace MyDog
             Console.WriteLine("a) See all dogs");
             Console.WriteLine("b) Add new dog");
             Console.WriteLine("c) Update dog info..");
-            Console.WriteLine("d) Delete dog..");
+            Console.WriteLine("d) Delete dog");
             Console.WriteLine("e) Go back to main menu");
 
             ConsoleKey command = Console.ReadKey(true).Key;

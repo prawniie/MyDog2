@@ -61,6 +61,56 @@ namespace MyDog
             }
         }
 
+        internal void RemoveRing(int ringId)
+        {
+            var sql = "DELETE FROM Ring WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", ringId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void RemoveRingFromRingExhibitor(int ringId)
+        {
+            var sql = "DELETE FROM RingExhibitor WHERE RingId = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", ringId));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void RemoveRingFromRingBreed(int ringId)
+        {
+            var sql = "DELETE FROM RingBreed WHERE RingId = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", ringId));
+                command.ExecuteNonQuery();
+            }
+
+        }
+
+        internal bool CheckIfRingIdExists(int ringId)
+        {
+            List<Ring> listOfRings = GetAllRings();
+
+            if (listOfRings.Select(r => r.Id).Contains(ringId))
+                return true;
+            else
+                return false;
+        }
+
         internal void RemoveDog(int dogId)
         {
             var sql = "DELETE FROM Dog WHERE Id = @Id";
@@ -255,8 +305,11 @@ namespace MyDog
             //Get breedId from the name of the breed (required to create an instance of dog in the DB)
             int breedId = GetBreedIdFromBreedName(dog);//Kan ej få den att skapa en ny ras om den inte redan finns
 
-            //if (breedId == 0)
-            // CreateBreed(dog);
+            if (breedId == 0)
+            {
+                CreateBreed(dog);
+                breedId = GetBreedIdFromBreedName(dog);
+            }
 
             var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
 
@@ -275,7 +328,7 @@ namespace MyDog
 
         private int GetBreedIdFromBreedName(Dog dog)
         {
-            var sql = "SELECT Breed.Id, Breed.Name FROM Breed JOIN Dog ON Breed.Id = Dog.BreedId WHERE Breed.Name = @Name";
+            var sql = "SELECT Breed.Id, Breed.Name FROM Breed FULL JOIN Dog ON Breed.Id = Dog.BreedId WHERE Breed.Name = @Name";
 
 
             using (SqlConnection connection = new SqlConnection(conString))

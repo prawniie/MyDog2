@@ -56,6 +56,7 @@ namespace MyDog
             if (!int.TryParse(input, out int breedId))
             {
                 WriteRed("Please enter the breed's id number");
+                Console.ReadKey();
                 DeleteBreed();
             }
 

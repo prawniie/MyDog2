@@ -40,6 +40,7 @@ namespace MyDog
 
         private void DeleteExhibitor()
         {
+            Console.Clear();
             Header("Delete exhibitor");
 
             ShowAllExhibitorsBrief();
