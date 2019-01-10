@@ -75,6 +75,57 @@ namespace MyDog
             }
         }
 
+        internal void CreateDog(Dog dog)
+        {
+            //Get breedId from the name of the breed (required to create an instance of dog in the DB)
+
+            int breedId = GetBreedIdFromBreedName(dog);
+
+            //if (breedId == 0)
+            //{
+            //    CreateBreed();
+            //}
+
+            var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Name", dog.Name));
+                command.Parameters.Add(new SqlParameter("BreedId", breedId));
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private int GetBreedIdFromBreedName(Dog dog)
+        {
+            var sql = "SELECT Breed.Id, Breed.Name FROM Breed JOIN Dog ON Breed.Id = Dog.BreedId WHERE Breed.Name = @Name";
+
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Name", dog.Breed));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                int breedId = 0;
+
+                if (reader.Read())
+                {
+                    breedId = reader.GetSqlInt32(0).Value;
+                }
+
+                return breedId;
+            }
+
+
+        }
+
         internal bool CheckIfBreedExists(Breed breed)
         {
             List<Breed> listOfBreeds = GetAllBreeds();

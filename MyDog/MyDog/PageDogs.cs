@@ -59,7 +59,19 @@ namespace MyDog
 
         private void AddDog()
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Header("Add dog");
+
+            var dog = new Dog();
+
+            Console.Write("What is the name of the dog? ");
+            dog.Name = Console.ReadLine();
+
+            Console.Write("What is the breed of the dog? ");
+            dog.Breed = Console.ReadLine();
+
+            _dataAccess.CreateDog(dog);
+
+            WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
