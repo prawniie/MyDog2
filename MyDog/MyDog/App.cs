@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MyDog
 {
-    class App
+    partial class App
     {
+
+        DataAccess _dataAccess = new DataAccess();
 
         public void Run()
         {
@@ -14,6 +17,7 @@ namespace MyDog
 
         private void PageMainMenu()
         {
+            Console.Clear();
             Header("Menu");
             Console.WriteLine("a) Exhibitors");
             Console.WriteLine("b) Rings");
@@ -35,19 +39,7 @@ namespace MyDog
                 PageBreeds();
         }
 
-        private void PageBreeds()
-        {
-            Console.Clear();
-
-            Header("Breeds");
-
-            Console.WriteLine("See all breeds..");
-            Console.WriteLine("Add breed..");
-            Console.WriteLine("Update breed info..");
-            Console.WriteLine("Delete breed..");
-
-            Console.WriteLine();
-        }
+        
 
         private void PageDogs()
         {
