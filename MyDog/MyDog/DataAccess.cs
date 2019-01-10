@@ -75,29 +75,43 @@ namespace MyDog
             }
         }
 
-        internal void CreateDog(Dog dog)
+        internal void CreateBreed(Dog dog)
         {
-            //Get breedId from the name of the breed (required to create an instance of dog in the DB)
-
-            int breedId = GetBreedIdFromBreedName(dog);
-
-            //if (breedId == 0)
-            //{
-            //    CreateBreed();
-            //}
-
-            var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
+            var sql = "INSERT INTO Breed VALUES(@Name)";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
 
-                command.Parameters.Add(new SqlParameter("Name", dog.Name));
-                command.Parameters.Add(new SqlParameter("BreedId", breedId));
+                command.Parameters.Add(new SqlParameter("Name", dog.Breed));
 
                 command.ExecuteNonQuery();
             }
+        }
+
+        internal void CreateDog(Dog dog)
+        {
+
+            //Get breedId from the name of the breed (required to create an instance of dog in the DB)
+            int breedId = GetBreedIdFromBreedName(dog);//Kan ej få den att skapa en ny ras om den inte redan finns
+
+            //if (breedId == 0)
+            // CreateBreed(dog);
+
+            var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
+
+
+                using (SqlConnection connection = new SqlConnection(conString))
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+
+                    command.Parameters.Add(new SqlParameter("Name", dog.Name));
+                    command.Parameters.Add(new SqlParameter("BreedId", breedId));
+
+                    command.ExecuteNonQuery();
+                }
         }
 
         private int GetBreedIdFromBreedName(Dog dog)
@@ -115,7 +129,7 @@ namespace MyDog
 
                 int breedId = 0;
 
-                if (reader.Read())
+                while (reader.Read())
                 {
                     breedId = reader.GetSqlInt32(0).Value;
                 }
@@ -131,6 +145,16 @@ namespace MyDog
             List<Breed> listOfBreeds = GetAllBreeds();
 
             if (listOfBreeds.Select(b => b.Name).Contains(breed.Name))
+                return true;
+            else
+                return false;
+        }
+
+        internal bool CheckIfBreedExists(Dog dog)
+        {
+            List<Breed> listOfBreeds = GetAllBreeds();
+
+            if (listOfBreeds.Select(b => b.Name).Contains(dog.Breed))
                 return true;
             else
                 return false;

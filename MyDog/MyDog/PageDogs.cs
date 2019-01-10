@@ -13,7 +13,7 @@ namespace MyDog
             Header("Dogs");
 
             Console.WriteLine("a) See all dogs");
-            Console.WriteLine("b) Add new dog..");
+            Console.WriteLine("b) Add new dog");
             Console.WriteLine("c) Update dog info..");
             Console.WriteLine("d) Delete dog..");
             Console.WriteLine("e) Go back to main menu");
@@ -59,6 +59,7 @@ namespace MyDog
 
         private void AddDog()
         {
+            Console.Clear();
             Header("Add dog");
 
             var dog = new Dog();
@@ -69,9 +70,19 @@ namespace MyDog
             Console.Write("What is the breed of the dog? ");
             dog.Breed = Console.ReadLine();
 
-            _dataAccess.CreateDog(dog);
+            try
+            {
+                _dataAccess.CreateDog(dog);
+                WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
 
-            WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nCouldn't create the dog because the breed doesn't exist.");
+                Console.WriteLine("Please create a new breed first.");
+                Console.ResetColor();
+            }
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
