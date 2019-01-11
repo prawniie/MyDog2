@@ -147,6 +147,107 @@ namespace MyDog
                 return false;
         }
 
+        internal void CreateDogs(Exhibitor exhibitor)
+        {
+
+            foreach (var dog in exhibitor.Dogs)
+            {
+                //Get breedId from the name of the breed (required to create an instance of dog in the DB)
+                int breedId = GetBreedIdFromBreedName(dog);//Kan ej få den att skapa en ny ras om den inte redan finns
+
+                if (breedId == 0)
+                {
+                    CreateBreed(dog);
+                    breedId = GetBreedIdFromBreedName(dog);
+                }
+
+                var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
+
+
+                using (SqlConnection connection = new SqlConnection(conString))
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+
+                    command.Parameters.Add(new SqlParameter("Name", dog.Name));
+                    command.Parameters.Add(new SqlParameter("BreedId", breedId));
+
+                    command.ExecuteNonQuery();
+                }
+
+                AddToExhibitorDogTable(dog, exhibitor);
+            }
+        }
+
+        private void AddToExhibitorDogTable(Dog dog, Exhibitor exhibitor)
+        {
+            int dogId = GetDogId(dog);
+            int exhibitorId = GetExhibitorId(exhibitor);
+
+            var sql = "INSERT INTO ExhibitorDog VALUES(@DogId, @ExhibitorId)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("DogId", dogId));
+                command.Parameters.Add(new SqlParameter("ExhibitorId", exhibitorId));
+
+                command.ExecuteNonQuery();
+            }
+
+        }
+
+        private int GetExhibitorId(Exhibitor exhibitor)
+        {
+            var sql = @"SELECT Id FROM Exhibitor
+                        WHERE Mailadress = @Mailadress";
+
+            int exhibitorId = 0;
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Mailadress", exhibitor.EmailAdress));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    exhibitorId = reader.GetInt32(0);
+                    return exhibitorId;
+                }
+
+                return exhibitorId;
+            }
+        }
+
+        private int GetDogId(Dog dog)
+        {
+            var sql = @"SELECT Id FROM Dog
+                        WHERE Name = @Name";
+
+            int dogId = 0;
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Name", dog.Name));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    dogId = reader.GetInt32(0);
+                    return dogId;
+                }
+
+                return dogId;
+            }
+        }
+
         internal void RemoveExhibitorFromRingExhibitor(int exhibitorId)
         {
             var sql = "DELETE FROM RingExhibitor WHERE ExhibitorId = @Id";

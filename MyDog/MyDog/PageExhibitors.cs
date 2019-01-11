@@ -127,7 +127,17 @@ namespace MyDog
 
             do
             {
-                Dog dog = AddDogBrief();
+                Dog dog = new Dog();
+
+                Console.WriteLine("\nAdd dog");
+                Console.Write("Enter name of your dog: ");
+                string name = Console.ReadLine();
+
+                Console.Write("Enter breed of your dog: ");
+                string breed = Console.ReadLine();
+
+                dog.Name = name;
+                dog.Breed = breed;
                 exhibitor.Dogs.Add(dog);
 
                 Console.Write("Do you want to add another dog (yes/no)? ");
@@ -137,7 +147,9 @@ namespace MyDog
                     break;
 
             } while (true);
-            
+
+            _dataAccess.CreateDogs(exhibitor);
+
 
             WriteGreen($"\n{exhibitor.FirstName} {exhibitor.LastName} has been added!");
 
