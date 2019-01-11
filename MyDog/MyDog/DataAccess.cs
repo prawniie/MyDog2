@@ -182,6 +182,38 @@ namespace MyDog
             }
         }
 
+        internal List<Dog> GetAllDogsByExhibitorId(Exhibitor exhibitor)
+        {
+            var sql = "SELECT Dog.Id, Dog.Name, Breed.Name FROM Dog " +
+                "JOIN Breed ON Dog.BreedId = Breed.Id " +
+                "FULL JOIN Exhibitor ON Dog.ExhibitorId = Exhibitor.Id " +
+                "WHERE Exhibitor.Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Id", exhibitor.Id));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var exhibitorsDogs = new List<Dog>();
+
+                while (reader.Read())
+                {
+                    var dog = new Dog();
+                    dog.Id = reader.GetSqlInt32(0).Value;
+                    dog.Name = reader.GetSqlString(1).Value;
+                    dog.Breed = reader.GetSqlString(2).Value;
+                    exhibitorsDogs.Add(dog);
+                }
+
+                return exhibitorsDogs;
+
+            }
+        }
+
         private void AddToExhibitorDogTable(Dog dog, Exhibitor exhibitor)
         {
             int dogId = GetDogId(dog);

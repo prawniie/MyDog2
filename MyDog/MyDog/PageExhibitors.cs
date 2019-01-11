@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MyDog
@@ -164,16 +165,24 @@ namespace MyDog
 
             listOfExhibitors = _dataAccess.GetAllExhibitors();
 
+            List<Dog> listOfExhibitorsDogs = new List<Dog>();
+
+
             Console.Clear();
 
             Header("Exhibitors");
+
+            Console.WriteLine("NAME".PadRight(40) + "PHONE NUMBER".PadRight(20) + "EMAIL ADDRESS\n");
+
             foreach (var exhibitor in listOfExhibitors)
             {
-                Console.Write($"{exhibitor.Id}* ".PadRight(5));
-                Console.Write(exhibitor.FirstName.PadRight(15));
-                Console.Write(exhibitor.LastName.PadRight(20));
+                Console.Write($"{exhibitor.FirstName} {exhibitor.LastName}".PadRight(40));
                 Console.Write($"{exhibitor.PhoneNumber}".PadRight(20));
                 Console.WriteLine(exhibitor.EmailAdress);
+
+                listOfExhibitorsDogs = _dataAccess.GetAllDogsByExhibitorId(exhibitor);
+                Console.WriteLine($"Dogs: {string.Join(',', listOfExhibitorsDogs.Select(d => d.Name))}");
+                Console.WriteLine("__________________________________________________________________________________________________\n");
             }
 
             Console.WriteLine("\nPress any key to go back to main menu");
