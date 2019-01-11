@@ -153,7 +153,7 @@ namespace MyDog
             foreach (var dog in exhibitor.Dogs)
             {
                 //Get breedId from the name of the breed (required to create an instance of dog in the DB)
-                int breedId = GetBreedIdFromBreedName(dog);//Kan ej få den att skapa en ny ras om den inte redan finns
+                int breedId = GetBreedIdFromBreedName(dog);
 
                 if (breedId == 0)
                 {
@@ -161,7 +161,9 @@ namespace MyDog
                     breedId = GetBreedIdFromBreedName(dog);
                 }
 
-                var sql = "INSERT INTO DOG(Name, BreedId) VALUES(@Name,@BreedId)";
+                int exhibitorId = GetExhibitorId(exhibitor);
+
+                var sql = "INSERT INTO DOG(Name, BreedId,ExhibitorId) VALUES(@Name,@BreedId,@ExhibitorId)";
 
 
                 using (SqlConnection connection = new SqlConnection(conString))
@@ -171,11 +173,12 @@ namespace MyDog
 
                     command.Parameters.Add(new SqlParameter("Name", dog.Name));
                     command.Parameters.Add(new SqlParameter("BreedId", breedId));
+                    command.Parameters.Add(new SqlParameter("ExhibitorId", exhibitorId));
 
                     command.ExecuteNonQuery();
                 }
 
-                AddToExhibitorDogTable(dog, exhibitor);
+                //AddToExhibitorDogTable(dog, exhibitor);
             }
         }
 
@@ -501,10 +504,12 @@ namespace MyDog
         internal List<Exhibitor> GetAllExhibitors()
         {
             var sql = "SELECT Id, FirstName, LastName, PhoneNumber, Mailadress FROM Exhibitor";
-            //SELECT Exhibitor.Id, Exhibitor.FirstName, Exhibitor.LastName, Exhibitor.PhoneNumber, Exhibitor.Mailadress, Dog.Name, Dog.Id, Breed.Name " +
+
+            //var sql = "SELECT Exhibitor.Id, Exhibitor.FirstName, Exhibitor.LastName, Exhibitor.PhoneNumber, Exhibitor.Mailadress, Dog.Name, Dog.Id, Breed.Name " +
             //    "FROM Exhibitor JOIN ExhibitorDog ON Exhibitor.Id = ExhibitorDog.ExhibitorId " +
-            //    "JOIN Dog ON ExhibitorDog.DogId = Dog.Id" +
-            //    "JOIN Breed ON Breed.Id = Dog.BreedId
+            //    "JOIN Dog ON ExhibitorDog.DogId = Dog.Id " +
+            //    "JOIN Breed ON Breed.Id = Dog.BreedId";
+
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -523,6 +528,8 @@ namespace MyDog
                     exhibitor.LastName = reader.GetSqlString(2).Value;
                     exhibitor.PhoneNumber = reader.GetSqlString(3).Value;
                     exhibitor.EmailAdress = reader.GetSqlString(4).Value;
+
+                    
 
                     listOfExhibitors.Add(exhibitor);
 

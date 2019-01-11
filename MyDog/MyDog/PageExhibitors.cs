@@ -64,7 +64,7 @@ namespace MyDog
             }
             else
             {
-                _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId);
+                _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId); //Ta bort det här sen typ
                 _dataAccess.RemoveExhibitorFromExhibitorDog(exhibitorId);
                 _dataAccess.RemoveExhibitor(exhibitorId);
 
