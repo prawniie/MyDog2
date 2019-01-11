@@ -125,6 +125,20 @@ namespace MyDog
 
             //Lägg till att man kan lägga till hundar också, vilket sedan uppdateras i hunddatabasen
 
+            do
+            {
+                Dog dog = AddDogBrief();
+                exhibitor.Dogs.Add(dog);
+
+                Console.Write("Do you want to add another dog (yes/no)? ");
+                string input = Console.ReadLine();
+
+                if (input.ToLower() == "no")
+                    break;
+
+            } while (true);
+            
+
             WriteGreen($"\n{exhibitor.FirstName} {exhibitor.LastName} has been added!");
 
             Console.WriteLine("\nPress any key to go back to main menu");

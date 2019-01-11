@@ -94,6 +94,12 @@ namespace MyDog
             Console.Write("What is the name of the dog? ");
             dog.Name = Console.ReadLine();
 
+            if (dog.Name.Trim() == "")
+            {
+                WriteRed("You have to enter a name for your dog!");
+                AddDogBrief();
+            }
+
             Console.Write("What is the breed of the dog? ");
             dog.Breed = Console.ReadLine();
 
@@ -148,6 +154,39 @@ namespace MyDog
                 Console.Write($"*{dog.Id}".PadRight(10));
                 Console.Write(dog.Name.PadRight(20));
                 Console.WriteLine(dog.Breed);
+            }
+        }
+
+        private Dog AddDogBrief()
+        {
+            var dog = new Dog();
+
+            Console.Write("What is the name of the dog? ");
+            dog.Name = Console.ReadLine();
+
+            if (dog.Name.Trim() == "")
+            {
+                WriteRed("You have to enter a name for your dog!");
+                AddDogBrief();
+            }
+
+            Console.Write("What is the breed of the dog? ");
+            dog.Breed = Console.ReadLine();
+
+            try
+            {
+                _dataAccess.CreateDog(dog);
+                WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
+                return dog;
+
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nCouldn't create the dog because the breed doesn't exist.");
+                Console.WriteLine("Please create a new breed first.");
+                Console.ResetColor();
+                return null;
             }
         }
     }

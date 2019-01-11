@@ -1,6 +1,6 @@
 MyDog-mässan
 
-1. Utställare (CRUD); Vilka utställare är anmälda? Skapa ny utställare, Ta bort, Uppdatera
+1. Utställare (CRUD)
 - Id
 - Förnamn
 - Efternamn
@@ -10,11 +10,11 @@ MyDog-mässan
 
 OBS En utställare kan ha flera hundar, men en hund kan bara ha en utställare (one-to-many)
 
-2. Ras (CRUD); Vilka raser är anmälda? Lägg till, uppdatera, ta bort
+2. Ras (CRUD)
 - Id
 - Namn
 
-2. Hund (CRUD); Vilka hundar är anmälda? Namn och ras? Lägg till, uppdatera, ta bort ras
+2. Hund (CRUD)
 - Id
 - Namn
 - RasId (egentligen kan hundar ha flera olika raser, men inte vid utställning då det endast är renrasiga hundar)
@@ -24,16 +24,27 @@ OBS En utställare kan ha flera hundar, men en hund kan bara ha en utställare (
 3. Ring
 - Id
 - Nummer
-(- Åskådare)
-(- Vinst)
 - Ras
 
-(OBS en ring kan ha flera åskådare, men en åskådare kan bara vara vid en ring vid en given tidpunkt (one-to-many))
 OBS en ring kan ha flera raser, en ras kan finnas i flera ringar (many-to-many)
 OBS en ring kan ha flera utställare, en utställare kan finnas i flera ringar (many-to-many)
 
-(CRUD- nice to have); Bara kunna skriva ut anmälda åskådare
-4. Åskådare
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Nice-to-have:
+- Enums för raser istället för string
+- Visa vilka raser som går att se vid respektive ring
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Fortsatt arbete:
+
+- Inkludera samtliga data på Mydogmässan, dvs även Mässutställare och Besökare
+
+tex 
+4. Besökare
 - Id
 - Förnamn
 - Efternamn
