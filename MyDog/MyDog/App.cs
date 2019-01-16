@@ -11,20 +11,21 @@ namespace MyDog
         DataAccess _dataAccess = new DataAccess();
 
         public void Run()
-        {
-            PageMainMenu();
-        }
+        {                                            //(Kritisk användare), finns det inget namn på appen eller logga? 
+                                                     // undrar Agda 87. Jag har ingen
+            PageMainMenu();                          // aning om vad jag har öppnat för nå program D:
+        }                                         
 
         private void PageMainMenu()
         {
             Console.Clear();
             Header("Menu");
-            Console.WriteLine("a) Exhibitors");
+            Console.WriteLine("a) Exhibitors");               // (kritisk programmerare) För mycket tomma funktioner.
             Console.WriteLine("b) Rings");
             Console.WriteLine("c) Dogs");
             Console.WriteLine("d) Breeds");
 
-            ConsoleKey command = Console.ReadKey(true).Key;
+            ConsoleKey command = Console.ReadKey(true).Key;           // Stor välhanterad databas med bra exempel och info! :)
 
             if (command == ConsoleKey.A)
                 PageExhibitors();
@@ -37,7 +38,7 @@ namespace MyDog
 
             if (command == ConsoleKey.D)
                 PageBreeds();
-        }
+        }                                                         // else sats hade hjälpt, gärna med en consolekey.escape för att avsluta
 
 
         private void Header(string text)

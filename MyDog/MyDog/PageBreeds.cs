@@ -83,8 +83,8 @@ namespace MyDog
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
-            PageMainMenu();
-        }
+            PageMainMenu();              //(kritisk programmerare) SNälla skapa inte onödiga menyval för användare som
+        }                                // VERKLIGEN VERKLIGEN VERKLIGEN VILL uppdatera rasinfo.
 
         private void AddBreed()
         {
@@ -116,8 +116,8 @@ namespace MyDog
         {
             List<Breed> listOfBreeds = new List<Breed>();
 
-            listOfBreeds = _dataAccess.GetAllBreeds();
-
+            listOfBreeds = _dataAccess.GetAllBreeds();   // Eneklt att lägga till raser, raser som redan finns accepteras inte.
+                                                         // Väldigt bra!
             Console.Clear();
 
             //var listOfBreedsSorted = listOfBreeds.Select(b => b.Name).ToList();
@@ -128,9 +128,9 @@ namespace MyDog
                 Console.WriteLine($"* {breed.Name}");
             }
 
-            Console.WriteLine("\nPress any key to go back to main menu");
-            Console.ReadKey();
-            PageMainMenu();
+            Console.WriteLine("\nPress any key to go back to main menu");   // Jag hade gärna velat komma tillbaka till rasmenyn 
+            Console.ReadKey();                                              // om jag skriver fel/ väljer en funktion som inte är
+            PageMainMenu();                                                 // implementerad.
 
         }
     }

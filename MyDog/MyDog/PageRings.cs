@@ -13,8 +13,8 @@ namespace MyDog
 
             Header("Rings");
 
-            Console.WriteLine("a) See all rings");
-            Console.WriteLine("b) Add new ring");
+            Console.WriteLine("a) See all rings");    // Agda 87 klickade på R när hon skulle göra ett val, då sa programmet åt 
+            Console.WriteLine("b) Add new ring");     // henne att det inte finns en ring med id 0 ? Agda är förvirrad.
             Console.WriteLine("c) Update ring info..");
             Console.WriteLine("d) Delete ring");
             Console.WriteLine("e) Go back to main menu");
@@ -55,7 +55,7 @@ namespace MyDog
             if (!int.TryParse(input, out int ringId))
             {
                 WriteRed("Please enter the ring's id number");
-                Console.ReadKey();
+                Console.ReadKey();                                //Om Id't på Agda, 87's ring är abc så dör hela programmet
                 DeleteRing();
             }
 

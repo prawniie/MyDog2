@@ -5,10 +5,10 @@ using System.Text;
 
 namespace MyDog
 {
-    partial class App
-    {
-        private void PageExhibitors()
-        {
+    partial class App                                        //Fick show all exhibitors att permanens första programmet.
+    {                                                        //Detta hände när man fick ett exception under "skapa hund till exhibitor"
+        private void PageExhibitors()                        // fasen. Detta resulterar i att alla metorder/funtioner som kallar på
+        {                                                    // Show all exhibitors inte fungerar.
             Console.Clear();
 
             Header("Exhibitors");
@@ -140,9 +140,10 @@ namespace MyDog
                 dog.Breed = breed;
                 exhibitor.Dogs.Add(dog);
 
-                Console.Write("Do you want to add another dog (yes/no)? ");
-                string input = Console.ReadLine();
-
+                Console.Write("Do you want to add another dog (yes/no)? ");  // Skriver man fel eller skriver t.ex "n" så vill den
+                string input = Console.ReadLine();                           //fortfarande lägga till flera hundar.
+                                                                             //(kritisk programmerare) FAN YES gör ju ingenting,
+                                                                              // Jag kan ju skriva vad som helst!!!!!!
                 if (input.ToLower() == "no")
                     break;
 
@@ -153,9 +154,9 @@ namespace MyDog
 
             WriteGreen($"\n{exhibitor.FirstName} {exhibitor.LastName} has been added!");
 
-            Console.WriteLine("\nPress any key to go back to main menu");
-            Console.ReadKey();
-            PageMainMenu();
+            Console.WriteLine("\nPress any key to go back to main menu");    //(kritisk programmerare) HAR du aldrig hört om thread.sleep eller?
+            Console.ReadKey();                                               // Skall jag behöva KLICKA för att komma till startmenyn?
+            PageMainMenu();                                                  // om jag vill lägga till en ny uställare eller se uställare då?
         }
 
         private void ShowAllExhibitors()

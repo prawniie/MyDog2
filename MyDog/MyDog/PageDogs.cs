@@ -42,12 +42,12 @@ namespace MyDog
         private void DeleteDog()
         {
             Console.Clear();
-            Header("Delete dog");
+            Header("Delete dog");   
             ShowAllDogsBrief();
 
             Console.Write("Which dog do you want to delete (please enter the id number)? ");
 
-            string input = Console.ReadLine();
+            string input = Console.ReadLine(); // Väldigt bra användarvänlighet, väldigt förlåtande om man skriver fel.
 
             if (!int.TryParse(input, out int dogId))
             {
@@ -74,7 +74,7 @@ namespace MyDog
             PageMainMenu();
         }
 
-        private void UpdateDog()
+        private void UpdateDog()       // (kritisk användare) Vad fasiken är detta, vad är en sprint? Jag fattar ingenting!
         {
             Console.WriteLine("\nFeature will be implemented in the following sprint..");
 
@@ -147,8 +147,8 @@ namespace MyDog
             //    WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
 
             //}
-            //catch (Exception)
-            //{
+            //catch (Exception)                        // <---- (kritisk programmerare) VAD ÄR DETTA FÖR SKRÄP?!?!!?
+            //{  
             //    Console.ForegroundColor = ConsoleColor.Red;
             //    Console.WriteLine("\nCouldn't create the dog because the breed doesn't exist.");
             //    Console.WriteLine("Please create a new breed first.");
@@ -207,7 +207,7 @@ namespace MyDog
             foreach (var dog in listOfDogs)
             {
                 Console.Write($"* {dog.Name}".PadRight(20));
-                Console.WriteLine(dog.Breed);
+                Console.WriteLine(dog.Breed);                             //(kritisk användare) Fungerar dåligt om man har långa namn/raser.
             }
 
             Console.WriteLine("\nPress any key to go back to main menu");
