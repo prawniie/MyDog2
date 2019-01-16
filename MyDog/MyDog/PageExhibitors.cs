@@ -66,7 +66,6 @@ namespace MyDog
             else
             {
                 _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId); //Ta bort det här sen typ
-                _dataAccess.RemoveExhibitorFromExhibitorDog(exhibitorId);
                 _dataAccess.RemoveExhibitor(exhibitorId);
 
                 WriteGreen("\nThe exhibitor has been deleted!");
@@ -189,5 +188,7 @@ namespace MyDog
             Console.ReadKey();
             PageMainMenu();
         }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MyDog
@@ -24,7 +25,7 @@ namespace MyDog
                 ShowAllDogs();
 
             if (command == ConsoleKey.B)
-                AddDog();
+                AddDogPage();
 
             if (command == ConsoleKey.C)
                 UpdateDog();
@@ -63,7 +64,6 @@ namespace MyDog
             }
             else
             {
-                _dataAccess.RemoveDogFromExhibitorDog(dogId);
                 _dataAccess.RemoveDog(dogId);
 
                 WriteGreen("\nThe dog has been deleted!");
@@ -84,42 +84,114 @@ namespace MyDog
 
         }
 
-        private void AddDog()
+        private void AddDogPage()
         {
             Console.Clear();
             Header("Add dog");
 
-            var dog = new Dog();
+            Console.WriteLine("To be able to add a new dog, you need to do the following choice: ");
+            Console.WriteLine("a) Use existing exhibitor");
+            Console.WriteLine("b) Add a new exhibitor");
+            Console.WriteLine("c) Go back to main menu");
 
-            Console.Write("What is the name of the dog? ");
-            dog.Name = Console.ReadLine();
+            ConsoleKey command = Console.ReadKey(true).Key;
 
-            if (dog.Name.Trim() == "")
+            Exhibitor exhibitor = new Exhibitor();
+
+            if (command == ConsoleKey.A)
             {
-                WriteRed("You have to enter a name for your dog!");
-                AddDogBrief();
+                exhibitor = GetExhibitorFromList();
+                AddDog(exhibitor);
             }
+            
+            if(command == ConsoleKey.B)
+                AddExhibitor();
 
-            Console.Write("What is the breed of the dog? ");
-            dog.Breed = Console.ReadLine();
+            if (command == ConsoleKey.C)
+                PageMainMenu();
 
-            try
+            
+
+        }
+
+        private void AddDog(Exhibitor exhibitor)
+        {
+            do
             {
-                _dataAccess.CreateDog(dog);
-                WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
+                Dog dog = new Dog();
 
-            }
-            catch (Exception)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nCouldn't create the dog because the breed doesn't exist.");
-                Console.WriteLine("Please create a new breed first.");
-                Console.ResetColor();
-            }
+                Console.WriteLine("\nAdd dog");
+                Console.Write("Enter name of your dog: ");
+                string name = Console.ReadLine();
+
+                Console.Write("Enter breed of your dog: ");
+                string breed = Console.ReadLine();
+
+                dog.Name = name;
+                dog.Breed = breed;
+                exhibitor.Dogs.Add(dog);
+
+                Console.Write("Do you want to add another dog (yes/no)? ");
+                string input = Console.ReadLine();
+
+                if (input.ToLower() == "no")
+                    break;
+
+            } while (true);
+
+            _dataAccess.CreateDogs(exhibitor);
+
+            //try
+            //{
+            //    _dataAccess.CreateDog(dog);
+            //    WriteGreen($"The dog {dog.Name} ({dog.Breed}) has been added!");
+
+            //}
+            //catch (Exception)
+            //{
+            //    Console.ForegroundColor = ConsoleColor.Red;
+            //    Console.WriteLine("\nCouldn't create the dog because the breed doesn't exist.");
+            //    Console.WriteLine("Please create a new breed first.");
+            //    Console.ResetColor();
+            //}
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
             PageMainMenu();
+        }
+
+        private Exhibitor GetExhibitorFromList()
+        {
+            List<Exhibitor> listOfExhibitors = new List<Exhibitor>();
+
+            listOfExhibitors = _dataAccess.GetAllExhibitors();
+
+            List<Dog> listOfExhibitorsDogs = new List<Dog>();
+
+
+            Console.Clear();
+
+            Header("Exhibitors");
+
+            Console.WriteLine("NAME".PadRight(40) + "PHONE NUMBER".PadRight(20) + "EMAIL ADDRESS\n");
+
+            foreach (var exhibitor in listOfExhibitors)
+            {
+                Console.Write($"{exhibitor.Id}: {exhibitor.FirstName} {exhibitor.LastName}".PadRight(40));
+                Console.Write($"{exhibitor.PhoneNumber}".PadRight(20));
+                Console.WriteLine(exhibitor.EmailAdress);
+
+                listOfExhibitorsDogs = _dataAccess.GetAllDogsByExhibitorId(exhibitor);
+                Console.WriteLine($"Dogs: {string.Join(',', listOfExhibitorsDogs.Select(d => d.Name))}");
+                Console.WriteLine("__________________________________________________________________________________________________\n");
+            }
+
+            Console.Write("Which exhibitor do you want to use (enter id number)? ");
+            int exhibitorId = int.Parse(Console.ReadLine());
+
+            Exhibitor ex = _dataAccess.GetExhibitorById(exhibitorId);
+
+            return ex;
 
         }
 
@@ -159,6 +231,7 @@ namespace MyDog
 
         private Dog AddDogBrief()
         {
+
             var dog = new Dog();
 
             Console.Write("What is the name of the dog? ");

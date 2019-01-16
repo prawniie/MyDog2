@@ -33,7 +33,13 @@ OBS en ring kan ha flera utställare, en utställare kan finnas i flera ringar (
 
 Nice-to-have:
 - Enums för raser istället för string
+
+FLer funktioner:
 - Visa vilka raser som går att se vid respektive ring
+- Se vilka utställare som ska vara vid vilken ring (används ej för tillfället)
+
+Validering validering validering :D 
+Mer säkerhet när man ska ta bort grejer, att man får chans på sig att ändra sig
 
 
 

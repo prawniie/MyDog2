@@ -1,0 +1,19 @@
+MyDog
+
+App som innehåller information om MyDog-mässans:
+- utställare (aka hundägare)
+- hundar som ska ställas ut
+- ringar (aka den specifika plats där hunden ska ställas ut)
+- hundraser
+
+Appen innehåller just nu möjlighet att utföra CRD-operationer på utställare, hundar, ringar och hundraser (ej uppdatera).
+
+-------------------------------------------------------------------------------------------------------
+
+Om appen skulle utvecklas vidare skulle jag lägga till: 
+
+- Validering validering validering! Många gånger då appen förlitar sig på användarens input och det vet vi ju att den kan bli lite tokig..
+
+Fler funktioner:
+- Visa vilka raser som går att se vid respektive ring
+- Se vilka utställare som ska vara vid vilken ring (används ej för tillfället)

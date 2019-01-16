@@ -182,6 +182,34 @@ namespace MyDog
             }
         }
 
+        internal Exhibitor GetExhibitorById(int exhibitorId)
+        {
+            var sql = "SELECT Id, FirstName, LastName, PhoneNumber, Mailadress FROM Exhibitor WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("Id", exhibitorId));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    var exhibitor = new Exhibitor();
+                    exhibitor.Id = reader.GetSqlInt32(0).Value;
+                    exhibitor.FirstName = reader.GetSqlString(1).Value;
+                    exhibitor.LastName = reader.GetSqlString(2).Value;
+                    exhibitor.PhoneNumber = reader.GetSqlString(3).Value;
+                    exhibitor.EmailAdress = reader.GetSqlString(4).Value;
+
+                    return exhibitor;
+                }
+                return null;
+            }
+        }
+
         internal List<Dog> GetAllDogsByExhibitorId(Exhibitor exhibitor)
         {
             var sql = "SELECT Dog.Id, Dog.Name, Breed.Name FROM Dog " +
