@@ -19,9 +19,9 @@ namespace MyDog
             Console.WriteLine("d) Delete ring");
             Console.WriteLine("e) Go back to main menu");
 
-            ConsoleKey command = Console.ReadKey(true).Key;
-
-            if (command == ConsoleKey.A)
+            ConsoleKey command = Console.ReadKey(true).Key;    // Om man klickar på annat än de valen i menyn så stängs programmet av.
+                                                               // Kanske ha en command == ConsoleKey.Escape som stänger av är mer passande.
+            if (command == ConsoleKey.A)                       // Sedan en else sats som inte tillåter feltryckningar.
                 ShowAllRings();
 
             if (command == ConsoleKey.B)
