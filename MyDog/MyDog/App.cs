@@ -12,10 +12,10 @@ namespace MyDog
         DataAccess _dataAccess = new DataAccess();
 
         public void Run()
-        {                                            //(Kritisk användare), finns det inget namn på appen eller logga? 
-            WriteLogo();                                         // undrar Agda 87. Jag har ingen
-            PageMainMenu();                          // aning om vad jag har öppnat för nå program D:
-                                                    // ********DONE********** 
+        {                                            
+            WriteLogo();                             
+            PageMainMenu();                         
+                                                   
         }
 
         private void WriteLogo()
@@ -49,7 +49,7 @@ namespace MyDog
 
             Console.WriteLine("\n\nPress 'esc' to quit");
 
-            ConsoleKey command = Console.ReadKey(true).Key;                                 // Stor välhanterad databas med bra exempel och info! :)
+            ConsoleKey command = Console.ReadKey(true).Key;                                
 
             if (command == ConsoleKey.A)
                 PageExhibitors();

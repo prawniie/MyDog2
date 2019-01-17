@@ -74,9 +74,36 @@ namespace MyDog
             PageMainMenu();
         }
 
-        private void UpdateDog()       // (kritisk användare) Vad fasiken är detta, vad är en sprint? Jag fattar ingenting!
+        private void UpdateDog()     //Ska fortsätta här och implementera uppdatera funktionen i databasen  
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Update dog info");
+            ShowAllDogsBrief();
+
+            Console.Write("Which dog do you want to update (please enter the id number)? ");
+
+            string input = Console.ReadLine(); // Väldigt bra användarvänlighet, väldigt förlåtande om man skriver fel.
+
+            if (!int.TryParse(input, out int dogId))
+            {
+                WriteRed("Please enter the dog's id number");
+                Console.ReadKey();
+                DeleteDog();
+            }
+
+            bool dogIdExists = _dataAccess.CheckIfDogIdExists(dogId);
+
+            if (dogIdExists == false)
+            {
+                WriteRed($"\nA dog with id number {dogId} doesn't exist.");
+            }
+            else
+            {
+                _dataAccess.RemoveDog(dogId);
+
+                WriteGreen("\nThe dog has been deleted!");
+            }
+
 
             Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();

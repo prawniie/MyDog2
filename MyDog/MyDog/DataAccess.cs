@@ -101,6 +101,20 @@ namespace MyDog
 
         }
 
+        internal void UpdateBreed(int breedId, string breedName)
+        {
+            var sql = "UPDATE Breed SET Name=@Name WHERE id=@Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", breedId));
+                command.Parameters.Add(new SqlParameter("Name", breedName));
+                command.ExecuteNonQuery();
+            }
+        }
+
         internal bool CheckIfRingIdExists(int ringId)
         {
             List<Ring> listOfRings = GetAllRings();

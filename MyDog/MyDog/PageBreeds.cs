@@ -77,14 +77,48 @@ namespace MyDog
             PageMainMenu();
         }
 
-        private void UpdateBreed()
+        private void UpdateBreed() //Nytt grej i senaste funktionen
         {
-            Console.WriteLine("\nFeature will be implemented in the following sprint..");
+            Console.Clear();
+            Header("Update breed");
 
-            Console.WriteLine("\nPress any key to go back to main menu");
+            List<Breed> listOfBreeds = new List<Breed>();
+            listOfBreeds = _dataAccess.GetAllBreeds();
+
+            foreach (var breed in listOfBreeds)
+            {
+                Console.WriteLine($"{breed.Id} {breed.Name}");
+            }
+
+            Console.Write("Which breed do you want to update (enter the breed's id number): ");
+            string input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int breedId))
+            {
+                WriteRed("Please enter the breed's id number");
+                Console.ReadKey();
+                UpdateBreed();
+            }
+
+            bool breedIdExists = _dataAccess.CheckIfBreedIdExists(breedId);
+
+            if (breedIdExists == false)
+            {
+                WriteRed($"\nA breed with id number {breedId} doesn't exist.");
+            }
+            else
+            {
+                Console.Write("Enter the new name of the breed: ");
+                string breedName = Console.ReadLine();
+                _dataAccess.UpdateBreed(breedId, breedName);
+                WriteGreen("\nThe breed name has been updated!");
+            }
+        
+
+        Console.WriteLine("\nPress any key to go back to main menu");
             Console.ReadKey();
-            PageMainMenu();              //(kritisk programmerare) SNälla skapa inte onödiga menyval för användare som
-        }                                // VERKLIGEN VERKLIGEN VERKLIGEN VILL uppdatera rasinfo.
+            PageMainMenu();              
+        }                               
 
         private void AddBreed()
         {
@@ -116,11 +150,9 @@ namespace MyDog
         {
             List<Breed> listOfBreeds = new List<Breed>();
 
-            listOfBreeds = _dataAccess.GetAllBreeds();   // Eneklt att lägga till raser, raser som redan finns accepteras inte.
-                                                         // Väldigt bra!
+            listOfBreeds = _dataAccess.GetAllBreeds();  
+                                                         
             Console.Clear();
-
-            //var listOfBreedsSorted = listOfBreeds.Select(b => b.Name).ToList();
 
             Header("Breeds");
             foreach (var breed in listOfBreeds)
@@ -128,9 +160,9 @@ namespace MyDog
                 Console.WriteLine($"* {breed.Name}");
             }
 
-            Console.WriteLine("\nPress any key to go back to main menu");   // Jag hade gärna velat komma tillbaka till rasmenyn 
-            Console.ReadKey();                                              // om jag skriver fel/ väljer en funktion som inte är
-            PageMainMenu();                                                 // implementerad.
+            Console.WriteLine("\nPress any key to go back to main menu");   
+            Console.ReadKey();                                              
+            PageMainMenu();                                                 
 
         }
     }
