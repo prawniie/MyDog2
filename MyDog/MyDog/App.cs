@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading;
 
 namespace MyDog
 {
@@ -12,33 +13,66 @@ namespace MyDog
 
         public void Run()
         {                                            //(Kritisk användare), finns det inget namn på appen eller logga? 
-                                                     // undrar Agda 87. Jag har ingen
+            WriteLogo();                                         // undrar Agda 87. Jag har ingen
             PageMainMenu();                          // aning om vad jag har öppnat för nå program D:
-        }                                         
+                                                    // ********DONE********** 
+        }
+
+        private void WriteLogo()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine();
+            Console.WriteLine(@"                                                        __  __       _____              ");
+            Console.WriteLine(@"                                                       |  \/  |     |  __ \             ");
+            Console.WriteLine(@"                                                       | \  / |_   _| |  | | ___   __ _ ");
+            Console.WriteLine(@"                                                       | |\/| | | | | |  | |/ _ \ / _` |");
+            Console.WriteLine(@"                                                       | |  | | |_| | |__| | (_) | (_| |");
+            Console.WriteLine(@"                                                       |_|  |_|\__, |_____/ \___/ \__, |");
+            Console.WriteLine(@"                                                                __/ |              __/ |");
+            Console.WriteLine(@"                                                               |___/              |___/ ");
+            Console.WriteLine();
+
+            Console.ResetColor();
+            Console.ReadKey();
+            Thread.Sleep(2000);
+        }
 
         private void PageMainMenu()
         {
             Console.Clear();
             Header("Menu");
-            Console.WriteLine("a) Exhibitors");               // (kritisk programmerare) För mycket tomma funktioner.
+            Console.WriteLine("a) Exhibitors");                                             // (kritisk programmerare) För mycket tomma funktioner.
             Console.WriteLine("b) Rings");
             Console.WriteLine("c) Dogs");
             Console.WriteLine("d) Breeds");
 
-            ConsoleKey command = Console.ReadKey(true).Key;           // Stor välhanterad databas med bra exempel och info! :)
+            Console.WriteLine("\n\nPress 'esc' to quit");
+
+            ConsoleKey command = Console.ReadKey(true).Key;                                 // Stor välhanterad databas med bra exempel och info! :)
 
             if (command == ConsoleKey.A)
                 PageExhibitors();
 
-            if (command == ConsoleKey.B)
+            else if (command == ConsoleKey.B)
                 PageRings();
 
-            if (command == ConsoleKey.C)
+            else if (command == ConsoleKey.C)
                 PageDogs();
 
-            if (command == ConsoleKey.D)
+            else if (command == ConsoleKey.D)
                 PageBreeds();
-        }                                                         // else sats hade hjälpt, gärna med en consolekey.escape för att avsluta
+
+            else if (command == ConsoleKey.Escape)
+                Console.WriteLine("\nShutting down the app..\n");
+
+            else
+            {
+                WriteRed("You have to press the A,B,C or D button to get started!");
+                Console.ReadKey();
+                PageMainMenu();
+            }
+        }                                                         
 
 
         private void Header(string text)
