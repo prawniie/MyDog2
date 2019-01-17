@@ -7,7 +7,7 @@ namespace MyDog
 {
     partial class App
     {
-        private void PageDogs()
+        private void PageDogs() //Fixa samtliga menyer så de blir som startmenyn, mycket bättre validering
         {
             Console.Clear();
 
@@ -15,7 +15,7 @@ namespace MyDog
 
             Console.WriteLine("a) See all dogs");
             Console.WriteLine("b) Add new dog");
-            Console.WriteLine("c) Update dog info..");
+            Console.WriteLine("c) Update dog info");
             Console.WriteLine("d) Delete dog");
             Console.WriteLine("e) Go back to main menu");
 
@@ -88,7 +88,7 @@ namespace MyDog
             {
                 WriteRed("Please enter the dog's id number");
                 Console.ReadKey();
-                DeleteDog();
+                UpdateDog();
             }
 
             bool dogIdExists = _dataAccess.CheckIfDogIdExists(dogId);
@@ -99,9 +99,42 @@ namespace MyDog
             }
             else
             {
-                _dataAccess.RemoveDog(dogId);
+                WriteOptions();
 
-                WriteGreen("\nThe dog has been deleted!");
+                ConsoleKey command = Console.ReadKey(true).Key;
+
+                if (command == ConsoleKey.A)
+                {
+                    Console.Write("Enter new name: ");
+                    string name = Console.ReadLine();
+                    _dataAccess.UpdateDogName(dogId, name);
+                }
+                else if (command == ConsoleKey.B)
+                {
+                    Console.Write("Enter new breed: ");
+                    string breed = Console.ReadLine();
+                    bool breedExists = _dataAccess.CheckIfBreedExists(breed);
+                    if (breedExists == false)
+                    {
+                        WriteRed("The breed doesn't exist! You have to add the breed to the database first.");
+                        AddBreed();
+                    }
+                    else
+                    {
+                        _dataAccess.UpdateDogBreed(dogId, breed);
+                        WriteGreen("\nThe dog has been updated!");
+                    }
+                }
+                else if (command == ConsoleKey.C)
+                {
+                    PageMainMenu();
+                }
+                else
+                {
+                    WriteRed("Please press either a or b");
+                    Console.ReadKey();
+                    UpdateDog();
+                }
             }
 
 
@@ -109,6 +142,14 @@ namespace MyDog
             Console.ReadKey();
             PageMainMenu();
 
+        }
+
+        private void WriteOptions()
+        {
+            Console.WriteLine("\nDo you want to: ");
+            Console.WriteLine("a) Update the name of the dog");
+            Console.WriteLine("b) Update the breed of the dog");
+            Console.WriteLine("c) Go back to main menu");
         }
 
         private void AddDogPage()

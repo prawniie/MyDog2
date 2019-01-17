@@ -13,7 +13,7 @@ namespace MyDog
             Header("Breeds");
             Console.WriteLine("a) Show all breeds");
             Console.WriteLine("b) Add breed");
-            Console.WriteLine("c) Update breed info..");
+            Console.WriteLine("c) Update breed info");
             Console.WriteLine("d) Delete breed");
             Console.WriteLine("e) Go back to main menu");
 

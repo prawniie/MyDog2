@@ -101,6 +101,39 @@ namespace MyDog
 
         }
 
+
+        internal void UpdateDogName(int dogId, string name)
+        {
+            var sql = "UPDATE Dog SET Name=@Name WHERE Id=@Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", dogId));
+                command.Parameters.Add(new SqlParameter("Name", name));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal void UpdateDogBreed(int dogId, string breed)
+        {
+            int breedId = GetBreedIdFromBreedName(breed);
+
+            var sql = "UPDATE Dog SET BreedId=@BreedId WHERE Id=@Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", dogId));
+                command.Parameters.Add(new SqlParameter("BreedId", breedId));
+                command.Parameters.Add(new SqlParameter("Name", breed));
+                command.ExecuteNonQuery();
+            }
+
+        }
+
         internal void UpdateBreed(int breedId, string breedName)
         {
             var sql = "UPDATE Breed SET Name=@Name WHERE id=@Id";
@@ -526,8 +559,30 @@ namespace MyDog
 
                 return breedId;
             }
+        }
+
+        private int GetBreedIdFromBreedName(string breed)
+        {
+            var sql = "SELECT Breed.Id, Breed.Name FROM Breed FULL JOIN Dog ON Breed.Id = Dog.BreedId WHERE Breed.Name = @Name";
 
 
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Name", breed));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                int breedId = 0;
+
+                while (reader.Read())
+                {
+                    breedId = reader.GetSqlInt32(0).Value;
+                }
+
+                return breedId;
+            }
         }
 
         internal bool CheckIfBreedExists(Breed breed)
@@ -535,6 +590,16 @@ namespace MyDog
             List<Breed> listOfBreeds = GetAllBreeds();
 
             if (listOfBreeds.Select(b => b.Name).Contains(breed.Name))
+                return true;
+            else
+                return false;
+        }
+
+        internal bool CheckIfBreedExists(string breed)
+        {
+            List<Breed> listOfBreeds = GetAllBreeds();
+
+            if (listOfBreeds.Select(b => b.Name).Contains(breed))
                 return true;
             else
                 return false;
