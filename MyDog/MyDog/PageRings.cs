@@ -13,30 +13,35 @@ namespace MyDog
 
             Header("Rings");
 
-            Console.WriteLine("a) See all rings");    // Agda 87 klickade på R när hon skulle göra ett val, då sa programmet åt 
-            Console.WriteLine("b) Add new ring");     // henne att det inte finns en ring med id 0 ? Agda är förvirrad.
+            Console.WriteLine("a) See all rings");
+            Console.WriteLine("b) Add new ring");     
             Console.WriteLine("c) Update ring info..");
             Console.WriteLine("d) Delete ring");
             Console.WriteLine("e) Go back to main menu");
 
-            ConsoleKey command = Console.ReadKey(true).Key;    // Om man klickar på annat än de valen i menyn så stängs programmet av.
-                                                               // Kanske ha en command == ConsoleKey.Escape som stänger av är mer passande.
-            if (command == ConsoleKey.A)                       // Sedan en else sats som inte tillåter feltryckningar.
+            ConsoleKey command = Console.ReadKey(true).Key;    
+                                                              
+            if (command == ConsoleKey.A)                       
                 ShowAllRings();
 
-            if (command == ConsoleKey.B)
+            else if (command == ConsoleKey.B)
                 AddRing();
 
-            if (command == ConsoleKey.C)
+            else if (command == ConsoleKey.C)
                 UpdateRing();
 
-            if (command == ConsoleKey.D)
+            else if (command == ConsoleKey.D)
                 DeleteRing();
 
-            if (command == ConsoleKey.E)
+            else if (command == ConsoleKey.E)
                 PageMainMenu();
 
-            Console.WriteLine();
+            else
+            {
+                WriteRed("You have to press the A,B,C D or E button!");
+                Console.ReadKey();
+                PageRings();
+            }
 
             Console.WriteLine();
         }

@@ -22,17 +22,24 @@ namespace MyDog
             if (command == ConsoleKey.A)
                 ShowAllBreeds();
 
-            if (command == ConsoleKey.B)
+            else if (command == ConsoleKey.B)
                 AddBreed();
 
-            if (command == ConsoleKey.C)
+            else if (command == ConsoleKey.C)
                 UpdateBreed();
 
-            if (command == ConsoleKey.D)
+            else if (command == ConsoleKey.D)
                 DeleteBreed();
 
-            if (command == ConsoleKey.E)
+            else if (command == ConsoleKey.E)
                 PageMainMenu();
+
+            else
+            {
+                WriteRed("You have to press the A,B,C D or E button!");
+                Console.ReadKey();
+                PageBreeds();
+            }
 
             Console.WriteLine();
         }
@@ -85,7 +92,7 @@ namespace MyDog
             PageMainMenu();
         }
 
-        private void UpdateBreed() //Nytt grej i senaste funktionen
+        private void UpdateBreed() //Nytt i senaste versionen
         {
             Console.Clear();
             Header("Update breed");

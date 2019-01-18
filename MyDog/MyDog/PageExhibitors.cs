@@ -24,17 +24,24 @@ namespace MyDog
             if (command == ConsoleKey.A)
                 ShowAllExhibitors();
 
-            if (command == ConsoleKey.B)
+            else if (command == ConsoleKey.B)
                 AddExhibitor();
 
-            if (command == ConsoleKey.C)
+            else if (command == ConsoleKey.C)
                 UpdateExhibitor();
 
-            if (command == ConsoleKey.D)
+            else if (command == ConsoleKey.D)
                 DeleteExhibitor();
 
-            if (command == ConsoleKey.E)
+            else if (command == ConsoleKey.E)
                 PageMainMenu();
+
+            else
+            {
+                WriteRed("You have to press the A,B,C D or E button!");
+                Console.ReadKey();
+                PageExhibitors();
+            }
 
             Console.WriteLine();
         }
@@ -67,7 +74,7 @@ namespace MyDog
             {
                 try
                 {
-                    _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId); //Ta bort det här sen typ
+                    _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId);
                     _dataAccess.RemoveExhibitor(exhibitorId);
                     WriteGreen("\nThe exhibitor has been deleted!");
                 }
@@ -129,8 +136,6 @@ namespace MyDog
 
             _dataAccess.CreateExhibitor(exhibitor);
 
-            //Lägg till att man kan lägga till hundar också, vilket sedan uppdateras i hunddatabasen
-
             do
             {
                 Dog dog = new Dog();
@@ -146,11 +151,10 @@ namespace MyDog
                 dog.Breed = breed;
                 exhibitor.Dogs.Add(dog);
 
-                Console.Write("Do you want to add another dog (yes/no - default is no)? ");  // Skriver man fel eller skriver t.ex "n" så vill den
-                string input = Console.ReadLine();                           //fortfarande lägga till flera hundar.
-                                                                             //(kritisk programmerare) FAN YES gör ju ingenting,
-                                                                             // Jag kan ju skriva vad som helst!!!!!!
-                if (input.ToLower() == "no")
+                Console.Write("Do you want to add another dog (yes/no - default is no)? ");
+                string input = Console.ReadLine();                           
+
+                if (input.ToLower() == "no" || string.IsNullOrWhiteSpace(input))
                     break;
                 else if (input.ToLower() == "yes")
                     continue;
@@ -164,9 +168,9 @@ namespace MyDog
 
             WriteGreen($"\n{exhibitor.FirstName} {exhibitor.LastName} has been added!");
 
-            Console.WriteLine("\nPress any key to go back to main menu");    //(kritisk programmerare) HAR du aldrig hört om thread.sleep eller?
-            Console.ReadKey();                                               // Skall jag behöva KLICKA för att komma till startmenyn?
-            PageMainMenu();                                                  // om jag vill lägga till en ny uställare eller se uställare då?
+            Console.WriteLine("\nPress any key to go back to main menu");
+            Console.ReadKey();                                               
+            PageMainMenu();                                                  
         }
 
         private void ShowAllExhibitors()

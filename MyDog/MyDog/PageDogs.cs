@@ -7,7 +7,7 @@ namespace MyDog
 {
     partial class App
     {
-        private void PageDogs() //Fixa samtliga menyer så de blir som startmenyn, mycket bättre validering
+        private void PageDogs()
         {
             Console.Clear();
 
@@ -24,17 +24,23 @@ namespace MyDog
             if (command == ConsoleKey.A)
                 ShowAllDogs();
 
-            if (command == ConsoleKey.B)
+            else if (command == ConsoleKey.B)
                 AddDogPage();
 
-            if (command == ConsoleKey.C)
+            else if (command == ConsoleKey.C)
                 UpdateDog();
 
-            if (command == ConsoleKey.D)
+            else if (command == ConsoleKey.D)
                 DeleteDog();
 
-            if (command == ConsoleKey.E)
+            else if (command == ConsoleKey.E)
                 PageMainMenu();
+            else
+            {
+                WriteRed("You have to press the A,B,C D or E button!");
+                Console.ReadKey();
+                PageDogs();
+            }
 
             Console.WriteLine();
         }
