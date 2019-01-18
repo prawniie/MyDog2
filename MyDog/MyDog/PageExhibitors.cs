@@ -5,10 +5,10 @@ using System.Text;
 
 namespace MyDog
 {
-    partial class App                                        //Fick show all exhibitors att permanens första programmet.
-    {                                                        //Detta hände när man fick ett exception under "skapa hund till exhibitor"
-        private void PageExhibitors()                        // fasen. Detta resulterar i att alla metorder/funtioner som kallar på
-        {                                                    // Show all exhibitors inte fungerar.
+    partial class App                                        
+    {                                                        
+        private void PageExhibitors()                        
+        {                                                    
             Console.Clear();
 
             Header("Exhibitors");
@@ -65,10 +65,16 @@ namespace MyDog
             }
             else
             {
-                _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId); //Ta bort det här sen typ
-                _dataAccess.RemoveExhibitor(exhibitorId);
-
-                WriteGreen("\nThe exhibitor has been deleted!");
+                try
+                {
+                    _dataAccess.RemoveExhibitorFromRingExhibitor(exhibitorId); //Ta bort det här sen typ
+                    _dataAccess.RemoveExhibitor(exhibitorId);
+                    WriteGreen("\nThe exhibitor has been deleted!");
+                }
+                catch (Exception)
+                {
+                    WriteRed("The chosen exhibitor has one or more dogs. In order to delete the exhibitor, you have to delete the dogs first. ");
+                }
             }
 
             Console.WriteLine("\nPress any key to go back to main menu");
@@ -140,11 +146,15 @@ namespace MyDog
                 dog.Breed = breed;
                 exhibitor.Dogs.Add(dog);
 
-                Console.Write("Do you want to add another dog (yes/no)? ");  // Skriver man fel eller skriver t.ex "n" så vill den
+                Console.Write("Do you want to add another dog (yes/no - default is no)? ");  // Skriver man fel eller skriver t.ex "n" så vill den
                 string input = Console.ReadLine();                           //fortfarande lägga till flera hundar.
                                                                              //(kritisk programmerare) FAN YES gör ju ingenting,
-                                                                              // Jag kan ju skriva vad som helst!!!!!!
+                                                                             // Jag kan ju skriva vad som helst!!!!!!
                 if (input.ToLower() == "no")
+                    break;
+                else if (input.ToLower() == "yes")
+                    continue;
+                else
                     break;
 
             } while (true);

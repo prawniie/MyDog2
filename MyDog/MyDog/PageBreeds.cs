@@ -68,8 +68,16 @@ namespace MyDog
             }
             else
             {
-                _dataAccess.RemoveBreed(breedId);
-                WriteGreen("\nThe breed has been deleted!");
+                try
+                {
+                    _dataAccess.RemoveBreed(breedId);
+                    WriteGreen("\nThe breed has been deleted!");
+                }
+                catch (Exception)
+                {
+                    WriteRed("\nThere exists dogs of this breed. In order to remove the breed, you have to delete the dogs first.");
+                }
+
             }
 
             Console.WriteLine("\nPress any key to go back to main menu");

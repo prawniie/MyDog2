@@ -34,7 +34,6 @@ namespace MyDog
             Console.WriteLine();
 
             Console.ResetColor();
-            Console.ReadKey();
             Thread.Sleep(2000);
         }
 
