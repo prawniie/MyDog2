@@ -261,7 +261,7 @@ namespace MyDog
         {
             var sql = "SELECT Dog.Id, Dog.Name, Breed.Name FROM Dog " +
                 "JOIN Breed ON Dog.BreedId = Breed.Id " +
-                "FULL JOIN Exhibitor ON Dog.ExhibitorId = Exhibitor.Id " +
+                "JOIN Exhibitor ON Dog.ExhibitorId = Exhibitor.Id " +
                 "WHERE Exhibitor.Id = @Id";
 
             using (SqlConnection connection = new SqlConnection(conString))
